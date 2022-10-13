@@ -1,4 +1,4 @@
-# Point-pattern-reconstruction-with-two-marks
+# Point pattern reconstruction of a plant ecosystem (forest) considering multiple characteristics of each plant (tree)
 
 Included are the following scripts: the procedure Point pattern reconstruction with two marks, an application with three data sets, scripts for display and an analysis (U-Test).
 

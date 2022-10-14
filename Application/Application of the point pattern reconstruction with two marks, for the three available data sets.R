@@ -2,8 +2,17 @@
 # Application of the point pattern reconstruction with two marks, for the      #
 #                          three available data sets.                          #
 ################################################################################
-#install.packages("spatstat")
+#install.packages("spatstat")                                                    ## Packages which are necessary for the execution of the point pattern reconstruction, please install if not available.  
 library(spatstat)  
+
+#install.packages("ggplot2")                                                     ## Packages required to run the entire script (point pattern reconstruction + visualisation). Please install them if they are not present when you want to run the script.
+#install.packages("patchwork")
+#install.packages("plotly")
+#install.packages("reshape")
+library(ggplot2)
+library(patchwork)
+library(plotly)
+library(reshape)
                                                                                 ## Loading function from github.
 source("https://raw.githubusercontent.com/ChrisWudel/Point-pattern-reconstruction/main/Point%20pattern%20reconstruction%20with%20two%20marks%20.R")
 
@@ -57,5 +66,3 @@ if(energy_course == TRUE){
    source("https://raw.githubusercontent.com/ChrisWudel/Point-pattern-reconstruction/main/Visualisation/Function%20for%20the%20visualisation%20of%20the%20energy%20course.R")
    vis_ener_cour(reconstruction)
 }
-
-

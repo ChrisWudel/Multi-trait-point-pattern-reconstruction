@@ -228,17 +228,17 @@ energy_course            <- data.frame(i = seq(from = 1, to = max_runs,by = 1),
 no_changes_energy        <- data.frame(energy = NA)
 move_coordinate          <- 0
 switch_coords            <- 0
-change_diameter          <- 0
+pick_mark_one          <- 0
 pick_mark                <- 0
-pick_species             <- 0
+pick_mark_two             <- 0
 Exchange_mark_one        <- 0
 Exchange_mark_two        <- 0
 energy_improvement       <- 0
 move_coordinate_improv   <- 0
 switch_coords_improv     <- 0
-change_diameter_improv   <- 0
+pick_mark_one_improv   <- 0
 pick_mark_improv         <- 0
-pick_species_improv      <- 0
+pick_mark_two_improv      <- 0
 Exchange_mark_one_improv <- 0
 Exchange_mark_two_improv <- 0
 no_changes_counter       <- 0
@@ -293,8 +293,8 @@ flush.console()
 }
 
 if (l < max_runs) l <- l + 1 else break
-action <- sample(c("move_coordinate", "switch_coords", "change_diameter", 
-                   "pick_species", "Exchange_mark_one", "Exchange_mark_two"), 
+action <- sample(c("move_coordinate", "switch_coords", "pick_mark_one", 
+                   "pick_mark_two", "Exchange_mark_one", "Exchange_mark_two"), 
                    1,, c(.4, .1, .1,.1,.2,.1))
 if (use.g_func) H <- G
 
@@ -371,8 +371,8 @@ switch(action,
                                  p$mark[i[1], fn$j] + m[2, fn$i] * m[2, fn$j] - 
                                  p$mark[i[2], fn$i] * p$mark[i[2], fn$j]
        },
-       change_diameter = {                                                       ## If the distribution (continuous function) of the diameter of the reference pattern generates a randomly drawn value for a randomly selected point in the new point pattern, the trap is applied in 20%.
-         change_diameter <- change_diameter + 1
+       pick_mark_one = {                                                         ## If the distribution (continuous function) of the diameter of the reference pattern generates a randomly drawn value for a randomly selected point in the new point pattern, the trap is applied in 20%.
+         pick_mark_one <- pick_mark_one + 1
                    i     <- sample.int(nrow(p), 1, replace = TRUE)  
                    m     <- p$mark[i, ]
              m[diameter] <-quantile(p_$mark[,diameter],probs = runif(1,0,1),
@@ -383,8 +383,8 @@ switch(action,
                    g0    <- f0 + m[fn$i] * m[fn$j] - p$mark[i, fn$i] * 
                               p$mark[i, fn$j]
     },
-    pick_species = {                                                             ## Draws a random value for a point from the new point pattern from the type distribution (discrete function) of the reference pattern, is applied in 10% of the traps.                                                             
-      pick_species<-pick_species+1
+    pick_mark_two = {                                                            ## Draws a random value for a point from the new point pattern from the type distribution (discrete function) of the reference pattern, is applied in 10% of the traps.                                                             
+      pick_mark_two<-pick_mark_two+1
       i          <- sample.int(nrow(p), 1, replace = TRUE)
       j          <- sample.int(nrow(p_), 1, replace = TRUE)
       m          <- p$mark[i, ]
@@ -416,9 +416,9 @@ switch(action,
          p$y[i] <- p$y[rev(i)]
        },
        
-       change_diameter   =,
+       pick_mark_one   =,
        pick_mark         =,
-       pick_species      =,
+       pick_mark_two      =,
        Exchange_mark_one =,
        Exchange_mark_two = {
          p$mark[i, ] <- m
@@ -467,12 +467,12 @@ switch(action,
          switch_coords_improv <- switch_coords_improv + 1
        },
        
-       change_diameter = {
-         change_diameter_improv <- change_diameter_improv + 1
+       pick_mark_one = {
+         pick_mark_one_improv <- pick_mark_one_improv + 1
        }, 
        
-       pick_species = {
-         pick_species_improv <- pick_species_improv + 1
+       pick_mark_two = {
+         pick_mark_two_improv <- pick_mark_two_improv + 1
        },
        
        Exchange_mark_one = {
@@ -552,18 +552,18 @@ energy_current    <- energy_course[l, 2]
 
 if(energy_evaluation == TRUE) {
   number_of_actions                                    <- 
-    data.frame(c("move_coordinate", "switch_coords", "change_diameter", 
-                 "pick_species", "Exchange_mark_one", "Exchange_mark_two"),
-               c(move_coordinate, switch_coords, change_diameter, pick_mark,
+    data.frame(c("move_coordinate", "switch_coords", "pick_mark_one", 
+                 "pick_mark_two", "Exchange_mark_one", "Exchange_mark_two"),
+               c(move_coordinate, switch_coords, pick_mark_one, pick_mark,
                  Exchange_mark_one, Exchange_mark_two))                            
   
   colnames(number_of_actions)                          <- c("name","value")
    
   number_of_actions_with_energy_improvement            <-
-     data.frame(c("move_coordinate", "switch_coords", "change_diameter", 
-                  "pick_species", "Exchange_mark_one", "Exchange_mark_two"), 
+     data.frame(c("move_coordinate", "switch_coords", "pick_mark_one", 
+                  "pick_mark_two", "Exchange_mark_one", "Exchange_mark_two"), 
                 c(move_coordinate_improv, switch_coords_improv, 
-                  change_diameter_improv, pick_species_improv, 
+                  pick_mark_one_improv, pick_mark_two_improv, 
                   Exchange_mark_one_improv, Exchange_mark_two_improv))
    
   colnames(number_of_actions_with_energy_improvement) <- c("name","value")

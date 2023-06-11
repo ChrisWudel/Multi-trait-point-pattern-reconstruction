@@ -204,7 +204,7 @@ ggp_dbh_markcorr_func_all <-
   theme(legend.title = element_blank())
  
 #print("\nlook under Plots to see the result.")
-cat(" ","\n","look under Plots to see the result.")
+cat("look under Plots to see the result.")
 result <- list(ggp_k_func_all, ggp_pcf_func_all, ggp_species_markcorr_func_all,ggp_dbh_markcorr_func_all)
 
 return(result)

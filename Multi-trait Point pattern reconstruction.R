@@ -32,7 +32,7 @@ Multi_trait_point_pattern_reconstruction <- function(marked_pattern,            
                                                  k                 = 1,          ## Vector of values k; used only if Dk is included above
                                                       
 
-                                                 w_statistics      = c(),        ## A vector of named weights for optional spatial statistics from the package "spatstat" 
+                                                 w_statistics      = c()        ## A vector of named weights for optional spatial statistics from the package "spatstat" 
                                                  )                               ## to be included in the energy computation. This may include:
                                                                                   ##   Dk: distribution function of the distance to the kth nearest neighbor
                                                                                   ##   K:  K_r-functions are taken into account for energy calculation if "TRUE".

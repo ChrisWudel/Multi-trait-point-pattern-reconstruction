@@ -203,7 +203,7 @@ ggp_dbh_markcorr_func_all <-
   labs(y = "kmm(r)",x = "r [m]") +
   theme(legend.title = element_blank())
  
-print("look under Plots to see the result.")
+print("\nlook under Plots to see the result.")
 result <- list(ggp_k_func_all, ggp_pcf_func_all, ggp_species_markcorr_func_all,ggp_dbh_markcorr_func_all)
 
 return(result)

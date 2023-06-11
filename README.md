@@ -1,6 +1,5 @@
-# Point pattern reconstruction of a plant ecosystem (forest) considering multiple characteristics of each plant (tree)
+# Multi-trait point pattern reconstruction of plant ecosystems
 
-Included are the following scripts: the procedure Point pattern reconstruction with two marks, an application with three data sets, scripts for display and an analysis (U-Test).
+The multi-trait point pattern reconstruction method for plant ecosystems allows the reconstruction of multi-trait marked point patterns. This Github repository contains the script for the method and an application script that can be used to test different datasets.
 
-To test the method you can download and run the application script (Application of the point pattern reconstruction with two marks, for the three available data sets). Please make sure that the required packages are installed and that you have made all the necessary settings.   
-
+To test the method, you can download the application script (Application of the Multi-trait Point pattern reconstruction) and run it using R. Make sure that the required packages are installed and that you have made all the necessary settings.   

@@ -33,11 +33,12 @@ Multi_trait_point_pattern_reconstruction <- function(marked_pattern,            
                                                       
 
                                                  w_statistics      = c()        ## A vector of named weights for optional spatial statistics from the package "spatstat" 
-                                                 )                               ## to be included in the energy computation. This may include:
+                                                                                  ## to be included in the energy computation. This may include:
                                                                                   ##   Dk: distribution function of the distance to the kth nearest neighbor
                                                                                   ##   K:  K_r-functions are taken into account for energy calculation if "TRUE".
                                                                                   ##   Hs: Hs_r-functions are taken into account for energy calculation if "TRUE".
                                                                                   ##    pcf: the "spatstat" pcf-functions of are taken into account for energy calculation if "TRUE".
+                                                 ) 
 { 
 ################################################################################### If several reconstructions are to be carried out, a list is created here in which the results are then saved continuously.
   if(n_repetitions > 1) {                                                           

@@ -43,7 +43,7 @@ if(nchar(names(reconstruction[1])) == 9){
     }
 
 for (i in seq_len(n_repetitions)) {
-cat("\n",Progress in the creation of the figures:", i/n_repetitions*100,"%\t\t\r", appendLF = FALSE)
+cat("\n","Progress in the creation of the figures:", i/n_repetitions*100,"%\t\t\r", appendLF = FALSE)
 if (n_repetitions > 1) {
   ppp_reconstructed<-as.ppp(reconstruction[[i]]$reconstructed, reconstruction[[i]]$window)
   }else {

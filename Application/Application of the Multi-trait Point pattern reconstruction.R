@@ -17,8 +17,8 @@ library(reshape)
 source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/Multi-trait%20Point%20pattern%20reconstruction.R")
 
 ################################################################################## Query whether and which visualisations are to be carried out.
-visualisation_of_point_patterns     <- T # or FALSE # the library(ggplot2) and the library(patchwork) must be installed.
-visualisation_of_summary_statistics <- F # or FALSE # the library(ggplot2) and the library(reshape) must be installed.
+visualisation_of_point_patterns     <- TRUE # or FALSE # the library(ggplot2) and the library(patchwork) must be installed.
+visualisation_of_summary_statistics <- TRUE # or FALSE # the library(ggplot2) and the library(reshape) must be installed.
 
 ################################################################################## Selection of the date set, which is then imported via gihub.
 source("https://raw.githubusercontent.com/ChrisWudel/point-pattern-reconstruction/main/Records/Function%20for%20selecting%20an%20available%20data%20set.R")
@@ -62,7 +62,8 @@ reconstruction <- Multi_trait_point_pattern_reconstruction(
   sd                = "step",                                     ## This is the standard deviation used in the move_coordinate action.
   steps_tol         = 1000,                                       ## After the value steps_tol it is checked whether the energy change is smaller than tol.   
   tol               = 1e-4,                                       ## tolerance:  the procedure is terminated when the energy change is smaller than 1-tol, this occurs no_changes times.
-  w_markcorr        = c(d_d=1, all=1, d_all=1, all_all=1, d_d0=1, all0=1, d_all0=1, all_all0=1),         ## Vector of possible weightings of individual mcf's 
+  w_markcorr        = c(d_d=1, all=1, d_all=1, all_all=1, 
+                        d_d0=1, all0=1, d_all0=1, all_all0=1),    ## Vector of possible weightings of individual mcf's 
 
   prob_of_actions   = c(move_coordinate = 0.4,                    ## Possible actions: sum to 1(100%).
                          switch_coords = 0.1,
@@ -70,8 +71,8 @@ reconstruction <- Multi_trait_point_pattern_reconstruction(
                          exchange_mark_two = 0.1,
                          pick_mark_one = 0.2,
                          pick_mark_two = 0.1),
-  k                 = 1,                                          ## Vector of values k; used only if Dk is included above
-  w_statistics      = c(),                                        ## A vector of named weights for optional spatial statistics from the package "spatstat" 
+  k                 = 1,                                           ## Vector of values k; used only if Dk is included above
+  w_statistics      = c(),                                         ## A vector of named weights for optional spatial statistics from the package "spatstat" 
                                                                    ## to be included in the energy computation. This may include:
                                                                    ##   Dk: distribution function of the distance to the kth nearest neighbor
                                                                    ##   K:  K_r-functions are taken into account for energy calculation if "TRUE".
@@ -87,5 +88,6 @@ if(visualisation_of_point_patterns  == TRUE){
 ################################################################################## Loads and executes the summary statistics visualisation function if TURE.
 if(visualisation_of_summary_statistics == TRUE){
   source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/Visualisation/Function%20for%20plotting%20summary%20statistics%20(K%20function%3B%20pcf%3B%20mcf).R")
+  source("C:/Users/admin/Desktop/Github_point-pattern-reconstruction/Visualisation/Function for plotting summary statistics (K function; pcf; mcf).R")
   plot_sum_stat(reconstruction)
 }

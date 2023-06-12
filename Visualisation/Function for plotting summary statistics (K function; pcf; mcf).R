@@ -43,7 +43,7 @@ if(nchar(names(reconstruction[1])) == 9){
     }
 
 for (i in seq_len(n_repetitions)) {
-cat("\n","Progress in the creation of the figures:", i/n_repetitions*100,"%\t\t\r", appendLF = FALSE)
+message("Progress in the creation of the figures:", i/n_repetitions*100,"%\t\t\r", appendLF = FALSE)
 if (n_repetitions > 1) {
   ppp_reconstructed<-as.ppp(reconstruction[[i]]$reconstructed, reconstruction[[i]]$window)
   }else {
@@ -203,9 +203,10 @@ ggp_dbh_markcorr_func_all <-
   labs(y = "kmm(r)",x = "r [m]") +
   theme(legend.title = element_blank())
  
-cat("look under Plots to see the result.")
 result <- list(ggp_k_func_all, ggp_pcf_func_all, ggp_species_markcorr_func_all,ggp_dbh_markcorr_func_all)
 
-return(result)
+cat(sep="\n\n")
+print("look under Plots to see the result.")
 
+return(result)
 }

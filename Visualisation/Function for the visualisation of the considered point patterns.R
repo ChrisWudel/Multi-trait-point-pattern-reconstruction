@@ -111,7 +111,7 @@ patchwork <- (ggp_Reference + theme(legend.position = "none") |
 
 print("look under Plots to see the result.")
 if(nchar(names(reconstruction[1])) != 9){
-  print("As multiple reconstructions were performed, the pattern from the first reconstruction is shown as the reconstructed point pattern in the graph.")
+  print("As multiple reconstructions were performed, the pattern from the first reconstruction is shown as the reconstructed point pattern in the figure.")
 }
 return(patchwork)
 

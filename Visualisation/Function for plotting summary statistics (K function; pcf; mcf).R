@@ -27,7 +27,7 @@ if(nchar(names(reconstruction[1])) == 9){
   rmax              <- as.numeric(reconstruction$Parameter_setting$rmax)
   rcount            <- as.numeric(reconstruction$Parameter_setting$rcount)
   rpresented        <- min(c(as.numeric(reconstruction$window[2]),as.numeric(reconstruction$window[4])))
-  r                 <- seq(rmin, rpresented, length.out = rcount)
+  r                 <- seq(rmin, if(rpresented >= rmax*2 ){rmax*2}else{rpresented}, length.out = rcount)
   bw                <- as.numeric(reconstruction$Parameter_setting$bw)
 
   ppp_reference <- as.ppp(reconstruction$reference, reconstruction$window) 
@@ -36,7 +36,7 @@ if(nchar(names(reconstruction[1])) == 9){
     rmax              <- as.numeric(reconstruction[[n_repetitions]]$Parameter_setting$rmax)
     rpresented        <- min(c(as.numeric(reconstruction[[n_repetitions]]$window[2]),as.numeric(reconstruction[[n_repetitions]]$window[4])))
     rcount            <- as.numeric(reconstruction[[n_repetitions]]$Parameter_setting$rcount)
-    r                 <- seq(rmin, rpresented, length.out = rcount)
+    r                 <- seq(rmin, if(rpresented <= rmax*2 ){rmax*2}else{rpresented}, length.out = rcount)
     bw                <- as.numeric(reconstruction[[n_repetitions]]$Parameter_setting$bw)
     
     ppp_reference <- as.ppp(reconstruction$reconstruction_1$reference, reconstruction$reconstruction_1$window)

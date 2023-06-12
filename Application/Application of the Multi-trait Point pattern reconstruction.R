@@ -23,7 +23,7 @@ visualisation_of_summary_statistics <- TRUE # or FALSE # the library(ggplot2) an
 ################################################################################## Selection of the date set, which is then imported via gihub.
 source("https://raw.githubusercontent.com/ChrisWudel/point-pattern-reconstruction/main/Records/Function%20for%20selecting%20an%20available%20data%20set.R")
 
-x <- "VERMOS_project" ## The following sets can be imported: 
+x <- "Northwest_German_Forest_Research_Institute" ## The following sets can be imported: 
                                    ## Real datasets:
                                     ##    "VERMOS_project" 
                                     ##    "Northwest_German_Forest_Research_Institute" 

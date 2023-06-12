@@ -48,9 +48,9 @@ reconstruction <- Multi_trait_point_pattern_reconstruction(
   marked_pattern, 
   n_repetitions     = 1,                                          ## Number of reconstructions to be carried out.
   max_steps         = 10000,                                      ## Number of simulation runs.
-  no_changes        = 25,                                         ## Number of iterations (per issue interval) after which the reconstruction is aborted if the energy does not decrease.
+  no_changes        = 5,                                         ## Number of iterations (per issue interval) after which the reconstruction is aborted if the energy does not decrease.
   rcount            = 250,                                        ## Number of intervals for which the summary statistics are evaluated.
-  rmax              = 5,                                          ## Is the maximum interval at which the summary statistics are evaluated.
+  rmax              = 25,                                          ## Is the maximum interval at which the summary statistics are evaluated.
   issue             = 1000 ,                                      ## Determines after how many simulation steps an output occurs.
   divisor           = "r",                                        ## Specifies by which of the smoothing kernels to be divided: "none","r", "d" or NULL.
   kernel_arg        = "epanechnikov",                             ## One of "epanechnikov", "rectangular" (or "box"), "cumulative", "gaussian"  

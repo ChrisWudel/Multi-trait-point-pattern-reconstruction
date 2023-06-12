@@ -46,9 +46,9 @@ marked_pattern$marks$dbh..mm.<-marked_pattern$marks$dbh..mm.*0.001              
 
 reconstruction <- Multi_trait_point_pattern_reconstruction(
   marked_pattern, 
-  n_repetitions     = 20,                                        ## Number of reconstructions to be carried out.
-  max_steps         = 1000,                                       ## Number of simulation runs.
-  no_changes        = 5,                                          ## Number of iterations (per issue interval) after which the reconstruction is aborted if the energy does not decrease.
+  n_repetitions     = 1,                                          ## Number of reconstructions to be carried out.
+  max_steps         = 10000,                                      ## Number of simulation runs.
+  no_changes        = 25,                                         ## Number of iterations (per issue interval) after which the reconstruction is aborted if the energy does not decrease.
   rcount            = 250,                                        ## Number of intervals for which the summary statistics are evaluated.
   rmax              = 5,                                          ## Is the maximum interval at which the summary statistics are evaluated.
   issue             = 1000 ,                                      ## Determines after how many simulation steps an output occurs.
@@ -88,6 +88,5 @@ if(visualisation_of_point_patterns  == TRUE){
 ################################################################################## Loads and executes the summary statistics visualisation function if TURE.
 if(visualisation_of_summary_statistics == TRUE){
   source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/Visualisation/Function%20for%20plotting%20summary%20statistics%20(K%20function%3B%20pcf%3B%20mcf).R")
-  source("C:/Users/admin/Desktop/Github_point-pattern-reconstruction/Visualisation/Function for plotting summary statistics (K function; pcf; mcf).R")
   plot_sum_stat(reconstruction)
 }

@@ -23,7 +23,7 @@ visualisation_of_summary_statistics <- TRUE # or FALSE # the library(ggplot2) an
 ################################################################################## Selection of the date set, which is then imported via gihub.
 source("https://raw.githubusercontent.com/ChrisWudel/point-pattern-reconstruction/main/Records/Function%20for%20selecting%20an%20available%20data%20set.R")
 
-x <- "Northwest_German_Forest_Research_Institute" ## The following sets can be imported: 
+x <- "random" ## The following sets can be imported: 
                                    ## Real datasets:
                                     ##    "VERMOS_project" 
                                     ##    "Northwest_German_Forest_Research_Institute" 
@@ -47,7 +47,7 @@ marked_pattern$marks$dbh..mm.<-marked_pattern$marks$dbh..mm.*0.001              
 reconstruction <- Multi_trait_point_pattern_reconstruction(
   marked_pattern, 
   n_repetitions     = 1,                                          ## Number of reconstructions to be carried out.
-  max_steps         = 10000,                                      ## Number of simulation runs.
+  max_steps         = 100000,                                      ## Number of simulation runs.
   no_changes        = 5,                                         ## Number of iterations (per issue interval) after which the reconstruction is aborted if the energy does not decrease.
   rcount            = 250,                                        ## Number of intervals for which the summary statistics are evaluated.
   rmax              = 25,                                          ## Is the maximum interval at which the summary statistics are evaluated.

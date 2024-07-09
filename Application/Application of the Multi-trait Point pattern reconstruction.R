@@ -14,14 +14,21 @@ library(patchwork)
 library(plotly)
 library(reshape)
                                                                                 ## Loading function from github.
-source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/Multi-trait%20Point%20pattern%20reconstruction.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/reconstruct_pattern_multi.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/compute_statistics.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/dummy_transf.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/energy_fun.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/calc_moments.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/select_kernel.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/plot.rd_multi.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/sample_points.R")
 
 ################################################################################## Query whether and which visualisations are to be carried out.
 visualisation_of_point_patterns     <- TRUE # or FALSE # the library(ggplot2) and the library(patchwork) must be installed.
 visualisation_of_summary_statistics <- TRUE # or FALSE # the library(ggplot2) and the library(reshape) must be installed.
 
 ################################################################################## Selection of the date set, which is then imported via gihub.
-source("/select_data.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/select_data.R")
 
 x <- "random" ## The following sets can be imported: 
                                    ## Real datasets:
@@ -44,11 +51,11 @@ marked_pattern <- as.ppp(data.frame(data), W = W)  ### marked_pattern <- as.ppp(
 marked_pattern$marks$dbh..mm.<-marked_pattern$marks$dbh..mm.*0.001              ## Here the metric marker (for these datasets the diameter of the trees)
                                                                                  ## is calculated in the desired unit; for the datasets that can be selected here it is the unit metre [m].
 
-reconstruction <- Multi_trait_point_pattern_reconstruction(
+reconstruction <- reconstruct_pattern_multi(
   marked_pattern, 
   n_repetitions     = 1,                                          ## Number of reconstructions to be carried out.
   max_steps         = 100000,                                     ## Number of simulation runs.
-  no_changes        = 5,                                          ## Number of iterations (per issue interval) after which the reconstruction is aborted if the energy does not decrease.
+  no_change        = 5,                                          ## Number of iterations (per issue interval) after which the reconstruction is aborted if the energy does not decrease.
   rcount            = 250,                                        ## Number of intervals for which the summary statistics are evaluated.
   rmax              = 25,                                         ## Is the maximum interval at which the summary statistics are evaluated.
   issue             = 1000 ,                                      ## Determines after how many simulation steps an output occurs.
@@ -85,12 +92,13 @@ reconstruction <- Multi_trait_point_pattern_reconstruction(
 )  
 ################################################################################## Loads and executes the function for visualising the point patterns under consideration if TURE. 
 if(visualisation_of_point_patterns  == TRUE){ 
-  source("vis_pattern.R")
+  source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/vis_patterns.R")
   vis_pp(reconstruction) 
 }
 
 ################################################################################## Loads and executes the summary statistics visualisation function if TURE.
 if(visualisation_of_summary_statistics == TRUE){
-  source("plot_statistics.R")
+  source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/plot_statistics.R")
   plot_sum_stat(reconstruction)
 }
+

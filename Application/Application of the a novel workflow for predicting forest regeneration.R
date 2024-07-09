@@ -6,91 +6,64 @@
 library(spatstat)  
 
 #install.packages("ggplot2")                                                     ## Packages required to run the entire script (point pattern reconstruction + visualisation). Please install them if they are not present when you want to run the script.
-#install.packages("patchwork")
-#install.packages("plotly")
-#install.packages("reshape")
 library(ggplot2)
-library(patchwork)
-library(plotly)
-library(reshape)
+
                                                                                 ## Loading function from github.
-source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/Multi-trait%20Point%20pattern%20reconstruction.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/reconstruct_pattern_multi.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/compute_statistics.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/dummy_transf.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/energy_fun.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/calc_moments.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/select_kernel.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/plot.rd_multi.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/sample_points.R")
+source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/edge_correction.R")
 
 ################################################################################## Query whether and which visualisations are to be carried out.
 visualisation_of_point_patterns     <- TRUE # or FALSE # the library(ggplot2) and the library(patchwork) must be installed.
-visualisation_of_summary_statistics <- TRUE # or FALSE # the library(ggplot2) and the library(reshape) must be installed.
-
 ################################################################################## Selection of the date set, which is then imported via gihub.
-source("/select_data.R")
-
-x <- "random" ## The following sets can be imported: 
-                                   ## Real datasets:
-                                    ##    "VERMOS_project" 
-                                    ##    "Northwest_German_Forest_Research_Institute" 
-                                    ##    "Marteloscope_data_from_the_by_the_Chair_of_Forest_Growth_and_Woody_Biomass_Production"
-                                   ## Simulated patterns:
-                                    ##    "random"
-                                    ##    "regular"
-                                    ##    "cluster_size5"
-                                    ##    "cluster_size5_and_random"
-                                   ## to do this, declare x with the corresponding name in "". 
-data <- data_import(x)
-W <- data[[2]] 
-data <- data [[1]]
-
+url <-"https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/Records/Real_datasets/Terrestrial_laser_scan_data_340_a31.csv"
+data <- read.csv(url,sep = ",", stringsAsFactors= TRUE)
+data$dbh <- as.numeric(data$dbh)
 ################################################################################## Execution of the point pattern reconstruction function.
-marked_pattern <- as.ppp(data.frame(data), W = W)  ### marked_pattern <- as.ppp(data.frame(data$x,data$y,data$`dbh [mm]`,factor(substr(data$`Tree species`,1,4)=="Acer"),data), W = W)  
+W <- owin(c(0, 100),c(0, 100))                                                  ## The description of the parameters can be found in the reconstruct_pattern_multi.R function in the func folder.
+core_window <- owin(c(35, 65),c(35, 65))
 
-marked_pattern$marks$dbh..mm.<-marked_pattern$marks$dbh..mm.*0.001              ## Here the metric marker (for these datasets the diameter of the trees)
-                                                                                 ## is calculated in the desired unit; for the datasets that can be selected here it is the unit metre [m].
+marked_pattern <- as.ppp(data.frame(data), W = W)  
+marked_pattern$marks$dbh <- marked_pattern$marks$dbh*0.001  
+xr <- marked_pattern$window$xrange
+yr <- marked_pattern$window$yrange
+obs_window = owin(c(xr),c(yr))
 
-reconstruction <- Multi_trait_point_pattern_reconstruction(
-  marked_pattern, 
-  n_repetitions     = 1,                                          ## Number of reconstructions to be carried out.
-  max_steps         = 100000,                                     ## Number of simulation runs.
-  no_changes        = 5,                                          ## Number of iterations (per issue interval) after which the reconstruction is aborted if the energy does not decrease.
-  rcount            = 250,                                        ## Number of intervals for which the summary statistics are evaluated.
-  rmax              = 25,                                         ## Is the maximum interval at which the summary statistics are evaluated.
-  issue             = 1000 ,                                      ## Determines after how many simulation steps an output occurs.
-  divisor           = "r",                                        ## Specifies by which of the smoothing kernels to be divided: "none","r", "d" or NULL.
-  kernel_arg        = "epanechnikov",                             ## One of "epanechnikov", "rectangular" (or "box"), "cumulative", "gaussian"  
-  timing            = TRUE,                                       ## Measures the process time if this is "TRUE".
-  energy_evaluation = TRUE,                                       ## Stores the energy components of the total energy per simulation step, if this is "TRUE".
-  show_graphic      = FALSE,                                      ## The point patterns are displayed and updated during the reconstruction if this parameter is "TRUE".
-  Lp                = 1,                                          ## Distance measure for the calculation of the energy function (L_p distance, 1 ≤ p < ∞).
-  bw                = 0.5,                                        ## Bandwidth with which the kernels are scaled, so that this is the standard deviation of the smoothing kernel.
-  sd                = "step",                                     ## This is the standard deviation used in the move_coordinate action.
-  steps_tol         = 1000,                                       ## After the value steps_tol it is checked whether the energy change is smaller than tol.   
-  tol               = 1e-4,                                       ## tolerance:  the procedure is terminated when the energy change is smaller than 1-tol, this occurs no_changes times.
-  w_markcorr        = c(m_m=1,one_one=0,  all=1, m_all=1,         ## Vector of possible weightings of individual mcf's. (Default: all equal).
-                        all_all=1, m_m0=1, one_one0=0, 
-                        all0=1, m_all0=1,all_all0=1),
-
-  prob_of_actions   = c(move_coordinate = 0.4,                    ## Possible actions: sum to 1(100%).
-                         switch_coords = 0.1,
-                         exchange_mark_one = 0.1,
-                         exchange_mark_two = 0.1,
-                         pick_mark_one = 0.2,
-                         pick_mark_two = 0.1,
-                         delete_point = 0.0, 
-                         add_point = 0.0),
-  k                 = 1,                                           ## Vector of values k; used only if Dk is included above
-  w_statistics      = c(),                                         ## A vector of named weights for optional spatial statistics from the package "spatstat" 
-                                                                   ## to be included in the energy computation. This may include:
-                                                                   ##   Dk: distribution function of the distance to the kth nearest neighbor
-                                                                   ##   K:  K_r-functions are taken into account for energy calculation if "TRUE".
-                                                                   ##   Hs: Hs_r-functions are taken into account for energy calculation if "TRUE".
-                                                                   ##   pcf: the "spatstat" pcf-functions of are taken into account for energy calculation if "TRUE".
-  verbose           = TRUE                                         ## Logical if progress report is printed.
-)  
+reconstruction <- reconstruct_pattern_multi(
+marked_pattern,
+fixed_points      = NULL,
+edge_correction   = TRUE,     
+n_repetitions     = 1,     
+max_steps         = 10000,     
+no_change         = 5,     
+rcount            = 250,     
+rmax              = 25,      
+issue             = 5000,       
+divisor           = "r",    
+kernel_arg        = "epanechnikov",
+timing            = TRUE,    
+energy_evaluation = TRUE,
+show_graphic      = FALSE,  
+Lp                = 1,      
+bw                = 0.5,
+sd                = "step",
+steps_tol         = 10000,   
+tol               = 1e-4,   
+w_markcorr        = c(m_m=1000,one_one=1500,  all=1, m_all=1, all_all=1, m_m0=1, one_one0=1, all0=1, m_all0=1, all_all0=1),
+prob_of_actions   = c(move_coordinate = 0.3, switch_coords = 0.1, exchange_mark_one = 0.1, exchange_mark_two = 0.1, pick_mark_one     = 0.1, pick_mark_two = 0.1, delete_point = 0.1, add_point = 0.1), 
+k                 = 1,       
+w_statistics      = c(),              
+is.fixed          = function(p) 35 <= p$x & p$x <= 65 & 35 <= p$y & p$y <= 65 | p$mark[,"dbh"] > 0.1,
+verbose           = TRUE)   
 ################################################################################## Loads and executes the function for visualising the point patterns under consideration if TURE. 
 if(visualisation_of_point_patterns  == TRUE){ 
-  source("vis_pattern.R")
+  source("https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/func/vis_patterns.R")
   vis_pp(reconstruction) 
 }
 
-################################################################################## Loads and executes the summary statistics visualisation function if TURE.
-if(visualisation_of_summary_statistics == TRUE){
-  source("plot_statistics.R")
-  plot_sum_stat(reconstruction)
-}

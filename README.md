@@ -1,5 +1,3 @@
 ## Multi-trait point pattern reconstruction of plant ecosystems
 
-Point pattern reconstruction of a plant ecosystem taking into account multiple traits of each plant. The multi-trait point pattern reconstruction method for plant ecosystems allows the reconstruction of multi-trait marked point patterns. This Github repository contains the script for the method and an application script that can be used to test different datasets.
-
-To test the method, you can download the application script (Application of the Multi-trait Point pattern reconstruction) and run it using R. Make sure that the required packages are installed and that you have made all the necessary settings.   
+The **M**ulti-**T**rait **P**oint **P**attern **R**econstruction (MTPPR) method enables the reconstruction of point patterns with multiple traits. This GitHub repository contains all the functions in the form of R scripts, as well as several datasets that can be used. Additionally, you will find a handbook at the following link that aims to facilitate application and accessibility.

@@ -47,7 +47,7 @@ ggp_Reference <-
   scale_shape_manual(name   = "stock layer", 
                      labels = c("Rejuvenation", "Upper stand"), 
                      values = c(13,16)) +
-  scale_size(name = "dbh [mm]", range = c(0.5, 5), 
+  scale_size(name = "dbh [mm]", range = c(0.5, 3), 
              breaks = c(5, 35, 50, 100, 300, 500),  
              labels = c(5, 35, 50, 100, 300, 500), limits = c(0, NA))+
   theme_classic() +
@@ -89,7 +89,7 @@ ggp_Reconstructed <-
   scale_shape_manual(name   = "stock layer", 
                      labels = c("Rejuvenation", "Upper stand"), 
                      values = c(13,16)) +
-  scale_size(name = "dbh [mm]", range = c(0.5, 5), 
+  scale_size(name = "dbh [mm]", range = c(0.5, 3), 
              breaks = c(5, 35, 50, 100, 300, 500),  
              labels = c(5, 35, 50, 100, 300, 500), limits = c(0, NA))+
   theme_classic() +
@@ -105,13 +105,12 @@ ggp_Reconstructed <-
 
 ################################################################################## Comparison of the dot patterns
 patchwork <- (ggp_Reference + theme(legend.position = "none") | 
-              ggp_Reconstructed)+ plot_annotation(
-                title = "Multi-trait point pattern reconstruction", 
-                subtitle = "Reconstruction of two marks (dbh and tree species)")
+              ggp_Reconstructed) + plot_annotation(title = "Multi-trait point pattern reconstruction", 
+                                subtitle = "Reconstruction of two marks (dbh and tree species)") 
 
-print("look under Plots to see the result.")
+message("look under Plots to see the result.")
 if(nchar(names(reconstruction[1])) != 9){
-  print("As multiple reconstructions were performed, the pattern from the first reconstruction is shown as the reconstructed point pattern in the figure.")
+  message("As multiple reconstructions were performed, the pattern from the first reconstruction is shown as the reconstructed point pattern in the figure.")
 }
 return(patchwork)
 

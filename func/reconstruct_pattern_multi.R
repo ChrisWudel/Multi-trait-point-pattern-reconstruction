@@ -204,13 +204,14 @@ reconstruct_pattern_multi <- function(marked_pattern,
     rmin    <- rmax / rcount
     r       <- seq(rmin, rmax, length.out = rcount)
 
+    wedge <- 1
+    wedge_ <- 1
+    
     # Calculation of the edge correction according to Ohser (1983) and Matheron (1975) if edge_correction == TRUE.
     if (edge_correction == TRUE){
       wedge <- edge_correction_ohser(r, xr, yr)
       wedge_ <- edge_correction_ohser(r, obs_window$xrange, obs_window$yrange)
     }
-    wedge <- 1
-    wedge_ <- 1
     
     # Calculation of the kernels.
     sel_kernel <- select_kernel(kernel_arg, bw, rmax, divisor)
@@ -242,10 +243,11 @@ reconstruct_pattern_multi <- function(marked_pattern,
 
     # Defines the initial state of the new ponit pattern.
  
-    xwr <- obs_window$xrange
-    ywr <- obs_window$yrange
+   
     p_fixed <- p_[p_$fixed_points,,drop=FALSE]
     p_ <- p_ [xr[1] <= p_$x & p_$x < xr[2] & yr[1] <= p_$y & p_$y < yr[2], ,drop = FALSE]
+    xwr <- obs_window$xrange
+    ywr <- obs_window$yrange
     add_n <- rpois(1, nrow(p_) * ((diff(xwr) * diff(ywr)) / (diff(core_window$xrange) * diff(core_window$yrange)))) 
     p <- p_[sample.int(nrow(p_),add_n, TRUE), ] 
     p$x <- runif(nrow(p), xwr[1], xwr[2]) 
@@ -281,17 +283,17 @@ reconstruct_pattern_multi <- function(marked_pattern,
     energy  <- Energy_fun(f, f0, nrow(p), statistics, f_, f0_, nrow(p_), statistics_, fn, wedge, wedge_, Lp, w_statistics)["energy"]
 
     # Prepares variables for the storage of progress.
-    energy_launch            <- as.vector(energy)
-    energy_course            <- data.frame(i = seq(from = 1, to = max_steps,by = 1),
-                                           energy = NA)
-    energy_improvement       <- 0L
-    number_of_actions        <- integer(0)
-    no_change_energy         <- Inf
-    no_change_counter        <- 0L
-    step_list                <- integer(0)
-    action_list              <- character(0)
-    Energy_list              <- numeric(0)
-    number_of_actions_with_energy_improvement <- integer(0)
+   energy_launch            <- as.vector(energy)
+   energy_course            <- data.frame(i = seq(from = 1, to = max_steps,by = 1),
+                                         energy = NA)
+   energy_improvement       <- 0L
+   number_of_actions        <- integer(0)
+   number_of_actions_with_energy_improvement <- integer(0)
+   no_change_energy         <- Inf
+   no_change_counter        <- 0L
+   step_list                <- integer(0)
+   action_list              <- character(0)
+   Energy_list              <- numeric(0)
 
     # loop to improve the newly created dot pattern by reducing its energy.
     step <- 0L

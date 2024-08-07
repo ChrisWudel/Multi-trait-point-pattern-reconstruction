@@ -24,6 +24,7 @@ plot_sum_stat <- function(reconstruction) {
   library(ggplot2)
   library(spatstat)
   library(reshape)
+  
 ################################################################################## Data import from the results of point pattern reconstruction.
 
 k_func_recon<-list()
@@ -74,8 +75,8 @@ if (n_repetitions > 1) {
   ppp_reconstructed$marks$mark<-ppp_reconstructed$marks$mark[,2]
   markcorr_func               <- markcorr(ppp_reconstructed, correction = "none", r = r)
   
-  dbh_markcorr_func_recon[[i]]     <- markcorr_func$diameter$un
-  species_markcorr_func_recon[[i]] <- markcorr_func$species$un
+  dbh_markcorr_func_recon[[i]]     <- markcorr_func[[1]]$un
+  species_markcorr_func_recon[[i]] <- markcorr_func[[2]]$un
 }
 ## Visualising the k function of the results of the point pattern reconstruction.
 k_func_recon<-as.data.frame(k_func_recon)
@@ -156,19 +157,19 @@ name <- c(sprintf("species_markcorr_func_recon%03d", seq_len(n_repetitions)))
 colnames(species_markcorr_func_recon) <- name
 
 markcorr_func               <- markcorr(ppp_reference, correction = "none", r = r)
-dbh_markcorr_func           <- markcorr_func$diameter$un
-species_markcorr_func       <- markcorr_func$species$un
+dbh_markcorr_func           <- markcorr_func[[1]]$un
+species_markcorr_func       <- markcorr_func[[2]]$un
 
 if(n_repetitions > 1){
   dbh_markcorr_func_recon_mean <- rowMeans(dbh_markcorr_func_recon)
   dbh_markcorr_all <- data.frame(cbind(dbh_markcorr_func,
                                      dbh_markcorr_func_recon,
                                      dbh_markcorr_func_recon_mean,
-                                     markcorr_func$diameter$r))
+                                     markcorr_func[[1]]$r))
   }else {
    dbh_markcorr_all <- data.frame(cbind(dbh_markcorr_func,
                                      dbh_markcorr_func_recon,
-                                     markcorr_func$diameter$r))
+                                     markcorr_func[[1]]$r))
     }
 
 if(n_repetitions > 1){
@@ -176,11 +177,11 @@ if(n_repetitions > 1){
   species_markcorr_all <- data.frame(cbind(species_markcorr_func,
                                      species_markcorr_func_recon,
                                      species_markcorr_func_recon_mean,
-                                     markcorr_func$diameter$r))
+                                     markcorr_func[[1]]$r))
   }else {
    species_markcorr_all <- data.frame(cbind(species_markcorr_func,
                                      species_markcorr_func_recon,
-                                     markcorr_func$diameter$r))
+                                     markcorr_func[[1]]$r))
     }
 
 colnames(dbh_markcorr_all)[1] <- c("Reference mark dbh")
@@ -221,7 +222,7 @@ ggp_dbh_markcorr_func_all <-
 result <- list(ggp_k_func_all, ggp_pcf_func_all, ggp_species_markcorr_func_all,ggp_dbh_markcorr_func_all)
 
 cat(sep="\n\n")
-print("look under Plots to see the result.")
+message("look under Plots to see the result.")
 
 return(result)
 }

@@ -31,12 +31,10 @@ core_window <- owin(c(35, 65),c(35, 65))
 
 marked_pattern <- as.ppp(data.frame(data), W = W)  
 marked_pattern$marks$dbh <- marked_pattern$marks$dbh*0.001  
-xr <- marked_pattern$window$xrange
-yr <- marked_pattern$window$yrange
-obs_window = owin(c(xr),c(yr))
 
 reconstruction <- reconstruct_pattern_multi(
 marked_pattern,
+core_window = core_window,
 fixed_points      = NULL,
 edge_correction   = TRUE,     
 n_repetitions     = 1,     

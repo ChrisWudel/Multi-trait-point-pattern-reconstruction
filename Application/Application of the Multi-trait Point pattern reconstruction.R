@@ -58,7 +58,7 @@ reconstruction <- reconstruct_pattern_multi(
   no_change        = 5,                                          ## Number of iterations (per issue interval) after which the reconstruction is aborted if the energy does not decrease.
   rcount            = 250,                                        ## Number of intervals for which the summary statistics are evaluated.
   rmax              = 25,                                         ## Is the maximum interval at which the summary statistics are evaluated.
-  issue             = 1000 ,                                      ## Determines after how many simulation steps an output occurs.
+  issue             = 10000,                                      ## Determines after how many simulation steps an output occurs.
   divisor           = "r",                                        ## Specifies by which of the smoothing kernels to be divided: "none","r", "d" or NULL.
   kernel_arg        = "epanechnikov",                             ## One of "epanechnikov", "rectangular" (or "box"), "cumulative", "gaussian"  
   timing            = TRUE,                                       ## Measures the process time if this is "TRUE".

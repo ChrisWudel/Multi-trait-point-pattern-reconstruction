@@ -7,17 +7,19 @@
 #' for the whole new ponit pattern.
 #' @param f0  Column sums of the weights of the brand correlation functions of
 #' the new point pattern.
+#' @param n Number of observations in the new ponit pattern used for normalizing f and f_.
 #' @param statistics Results of the compute_statistics function for the
 #' new point pattern (calculation of optional spatial statistics).
 #' @param fn Determination of the weightings of the mark correlation functions.
-#' @param wedge 
-#' @param wedge_ 
+#' @param wedge is a weighting factor that adjusts the significance of different
+#' values in the calculations, with higher values meaning that the corresponding 
+#' data points contribute more to the computed energy. 
 #' @param Lp Distance measure for the calculation of the energy function
 #' (Lp distance, 1 <= p <Inf).
 #' @param w_statistics Vector of named weights for optional spatial statistics
 #' from the \code{spatstat} package to be included in the energy calculation.This may
 #' include Dk, K, Hs, pcf.
-#'
+#' @param f_,f0_,n_,statistics_,wedge_ These are the same parameters, but only for the reference pattern.
 #' @details
 #' Defining the Energy_fun function to calculate the "energy" of the pattern
 #' (where a lower energy indicates a better match).

@@ -2,8 +2,8 @@
 #'
 #' @description Calculate Gest
 #'
-#' @param p 
-#' @param size 
+#' @param p A dataframe that should have a column named fixed_points.
+#' @param size The number of rows to sample.
 #'
 #' @details
 #'

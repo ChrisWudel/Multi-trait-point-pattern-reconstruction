@@ -42,6 +42,11 @@
 #' from the \code{spatstat} package to be included in the energy calculation. This may
 #' include Dk, K, Hs, pcf.
 #' @param verbose Logical if progress report is printed.
+#' @param fixed_points A variable that stores fixed points, with no fixed points by null.
+#' @param obs_window This defines the observation window for your spatial analysis.
+#' @param core_window Defines the core window for your analysis, by default set to the same coordinates as obs_window
+#' @param edge_correction calculate edge correction for spatial point pattern analysis.
+#' @param is.fixed This defines a function to determine if points are considered fixed.
 #'
 #' @details
 #' A novel approach carries out a pattern reconstruction of marked dot patterns
@@ -605,10 +610,3 @@ reconstruct_pattern_multi <- function(marked_pattern,
       return(reconstruction)
     }
 }
-
-
-#noch mal schaunen ob 572 - 579 stimmt, überlegen ob pick mark one bzw. pick mark to sinvoll ist das ja jetzt mehere marken funktioniren sollten, parammeter beschreibung weitern, alles testen, anwendungen machen 
-
-#noch mal wegen der muster inizalisung nachdenken
-
-

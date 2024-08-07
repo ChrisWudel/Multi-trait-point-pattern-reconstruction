@@ -1,6 +1,20 @@
-################################################################################
-#               Function to select available datasets                         #
-################################################################################
+#' data_import
+#'
+#' @description Imports various datasets.
+#' 
+#' @param x Input value that determines which dataset should be loaded and processed.
+#' 
+#' @details
+#' This function is used to import various datasets based on an input
+#' value, process them, and return them as a list containing the data and a spatial
+#' window object (W).
+#'
+#' @return void
+#'
+#' @aliases data_import
+#' @rdname data_import
+#'
+#' @export
 data_import <- function(x) {
   
 switch(x,

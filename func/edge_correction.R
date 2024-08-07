@@ -2,9 +2,8 @@
 #'
 #' @description Energy function
 #'
-#' @param r 
-#' @param xr  
-#' @param yr 
+#' @param r A radius used in the calculation of edge correction within the rectangular window.
+#' @param xr,yr Maximum extent in x and y direction of observation window.
 #'
 #' @details
 #' To calculate edge correction for spatial point pattern analysis, we consider 

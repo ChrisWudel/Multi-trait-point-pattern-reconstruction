@@ -54,7 +54,7 @@ marked_pattern$marks$dbh..mm.<-marked_pattern$marks$dbh..mm.*0.001              
 reconstruction <- reconstruct_pattern_multi(
   marked_pattern, 
   n_repetitions     = 1,                                          ## Number of reconstructions to be carried out.
-  max_steps         = 100000,                                     ## Number of simulation runs.
+  max_steps         = 1000,                                     ## Number of simulation runs.
   no_change        = 5,                                          ## Number of iterations (per issue interval) after which the reconstruction is aborted if the energy does not decrease.
   rcount            = 250,                                        ## Number of intervals for which the summary statistics are evaluated.
   rmax              = 25,                                         ## Is the maximum interval at which the summary statistics are evaluated.

@@ -48,7 +48,7 @@ data <- data [[1]]
 ################################################################################## Execution of the point pattern reconstruction function.
 marked_pattern <- as.ppp(data.frame(data), W = W)  ### marked_pattern <- as.ppp(data.frame(data$x,data$y,data$`dbh [mm]`,factor(substr(data$`Tree species`,1,4)=="Acer"),data), W = W)  
 
-marked_pattern$marks$dbh..mm.<-marked_pattern$marks$dbh..mm.*0.001              ## Here the metric marker (for these datasets the diameter of the trees)
+marked_pattern$marks[1]<-marked_pattern$marks[1]*0.001              ## Here the metric marker (for these datasets the diameter of the trees)
                                                                                  ## is calculated in the desired unit; for the datasets that can be selected here it is the unit metre [m].
 
 reconstruction <- reconstruct_pattern_multi(

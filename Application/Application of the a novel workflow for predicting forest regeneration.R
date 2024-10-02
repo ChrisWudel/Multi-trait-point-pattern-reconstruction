@@ -16,13 +16,14 @@ setup(
 ##################################################################################
 # Query whether and which visualisations are to be carried out.
 visualisation_of_point_patterns <- TRUE  # Set to TRUE or FALSE as needed
-
 ##################################################################################
 # Selection of the dataset, which is then imported via GitHub.
 url <- "https://raw.githubusercontent.com/ChrisWudel/Multi-trait-point-pattern-reconstruction/main/Records/Real_datasets/Terrestrial_laser_scan_data_340_a31.csv"
 data <- read.csv(url, sep = ",", stringsAsFactors = TRUE)
 data$dbh <- as.numeric(data$dbh)
 
+data <- data.frame(data[2],data[3],data[4],data[5])
+colnames(data) <- c("x", "y", "dbh", "species")
 ##################################################################################
 # Execution of the point pattern reconstruction function.
 W <- owin(c(0, 100), c(0, 100))  # Spatial window

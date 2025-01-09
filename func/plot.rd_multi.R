@@ -1,25 +1,44 @@
 #' plot.rd_multi
 #'
-#' @description Plot method for rd_multi object
+#' @description Plot method for the `rd_multi` object, visualizing multiple summary statistics 
+#' from the results of multi-mark point pattern reconstruction.
 #'
-#' @param x rd_multi Object created with \code{reconstruct_pattern_multi}.
-#' multiple marks.
-#' @param verbose Logical if progress should be printed.
-#' @param ... Currently not used
+#' @param x An `rd_multi` object created by \code{reconstruct_pattern_multi}, containing results 
+#' from multi-mark point pattern reconstruction, including multiple marks and their respective statistics.
+#' @param verbose Logical value indicating whether progress should be printed to the console. Default is `TRUE`.
+#' @param ... Currently unused, but included for compatibility with generic `plot` method.
 #'
 #' @details
-#' Calculates and visualises various summary statistics for the results of
-#' multi-marks point pattern reconstruction.
+#' This function generates visualizations for several spatial statistics, including the K-function, 
+#' pair correlation function (PCF), and mark correlation functions (MCF) for the results of multi-mark 
+#' point pattern reconstruction. The plots are produced for the reconstructed point patterns, along with 
+#' a comparison to the reference point pattern.
+#' 
+#' The following statistics are calculated and plotted:
+#' \itemize{
+#'   \item K-function (Kest)
+#'   \item Pair correlation function (PCF)
+#'   \item Mark correlation function (MCF) for both DBH and species
+#' }
+#'
+#' The plots include the following:
+#' \itemize{
+#'   \item K-function for both the reference and reconstructed patterns.
+#'   \item PCF for both the reference and reconstructed patterns.
+#'   \item Mark correlation functions for DBH and species for both reference and reconstructed patterns.
+#' }
 #'
 #' @seealso
-#' \code{\link{reconstruct_pattern_multi}}
+#' \code{\link{reconstruct_pattern_multi}}, \code{\link{Kest}}, \code{\link{pcf.ppp}}, \code{\link{markcorr}}
 #'
-#' @return void
-#'
-#' @aliases plot.rd_multi
-#' @rdname plot.rd_multi
+#' @return `NULL` (invisible)
+#' 
+#' @examples
+#' # Assuming `rd_multi_result` is an object created by `reconstruct_pattern_multi`
+#' plot(rd_multi_result)
 #'
 #' @export
+#' 
 plot.rd_multi <- function(x, verbose = TRUE, ...) {
 
   x<- reconstruction

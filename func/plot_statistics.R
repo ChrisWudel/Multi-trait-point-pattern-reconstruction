@@ -1,19 +1,31 @@
 #' plot_sum_stat
 #'
-#' @description Function to visualise the summary statistics of the point patterns used.
+#' @description Visualizes the summary statistics of point patterns, specifically focusing on the results 
+#' of point pattern reconstruction. It generates plots for various statistical functions related to the point pattern, 
+#' such as K-function, Pair correlation function (PCF), and Mark correlation functions (DBH and Species).
 #'
-#' @param reconstruction This represents the reconstructed point pattern.
+#' @param reconstruction A reconstructed point pattern object containing information about the reference point pattern, 
+#' the reconstructed point pattern, and associated parameters.
 #' 
 #' @details
-#' The function is used to visualise the results of the point pattern reconstruction 
-#' by displaying various statistical functions.
+#' This function is used to visualize the results of the point pattern reconstruction process. It generates and plots the 
+#' following functions:
+#' - K-function: Measures the spatial distribution of points, indicating clustering or regularity.
+#' - Pair correlation function (PCF): Describes the local density variation of points at different distances.
+#' - Mark correlation functions: Analyzes spatial dependence between marks associated with points (such as diameter at breast height (DBH) or species).
 #' 
-#' @return void
-#'
-#' @aliases plot_sum_stat
-#' @rdname plot_sum_stat
+#' The function produces ggplot-based figures and returns them as a list. It supports multiple repetitions of the reconstruction process.
+#' 
+#' @return A list of ggplot objects containing visualizations for the K-function, Pair correlation function, and 
+#' Mark correlation functions (both DBH and Species).
+#' 
+#' @import ggplot2
+#' @import spatstat
+#' @import reshape
+#' @import patchwork
 #'
 #' @export
+#' 
 plot_sum_stat <- function(reconstruction) {
   # Install required packages if not already installed
   if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")

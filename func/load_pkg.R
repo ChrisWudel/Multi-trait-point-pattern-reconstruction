@@ -1,24 +1,25 @@
 #' load_pkg
 #'
-#' @description Diese Funktion überprüft, ob die angegebenen Pakete installiert sind. 
-#' Falls Pakete fehlen, werden diese installiert und anschließend werden alle angegebenen 
-#' Pakete in die aktuelle R-Sitzung geladen.
+#' @description Checks if the specified packages are installed. If any packages are missing, 
+#' they are installed, and then all specified packages are loaded into the current R session.
 #'
-#' @param packages Ein Vektor von Paketnamen als Zeichenfolgen, die überprüft, bei Bedarf installiert 
-#' und geladen werden sollen.
+#' @param packages A character vector of package names. The function checks whether these packages 
+#' are installed, installs any that are missing, and then loads all specified packages into the current R session.
 #'
 #' @details
-#' Die Funktion identifiziert zunächst Pakete, die nicht installiert sind, installiert fehlende Pakete 
-#' und lädt dann alle angegebenen Pakete in die R-Sitzung. Es wird `requireNamespace` verwendet, um zu prüfen,
-#' ob das Paket verfügbar ist, und `library`, um es zu laden.
+#' The function first checks if the specified packages are already installed in the current R environment 
+#' using `requireNamespace`. If any packages are missing, they will be automatically installed using `install.packages()`. 
+#' After installation, the function loads all the specified packages into the current R session using `library()`. 
+#' This ensures that the required packages are available for use in the session.
 #'
 #' @return NULL
-#' @export
-#'
+#' 
 #' @examples
-#' # Pakete "ggplot2" und "dplyr" laden und installieren
+#' # Install and load the "ggplot2" and "dplyr" packages
 #' load_pkg(c("ggplot2", "dplyr"))
-#'
+#' 
+#' @export
+#' 
 load_pkg <- function(packages) {
   # Sicherstellen, dass 'packages' ein Zeichenvektor ist
   if (!is.character(packages)) {

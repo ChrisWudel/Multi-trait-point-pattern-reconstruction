@@ -1,27 +1,47 @@
 #' select_kernel
 #'
-#' @description Kernel selection
+#' @description 
+#' Selects a kernel function for energy calculations in point pattern reconstruction. The kernel is used to weigh distances and densities between points in the reconstruction process. 
+#' Depending on the selected kernel type, different mathematical functions are used to compute these weights.
 #'
-#' @param kernel_arg  Parameter of the function
-#' reconstruct_pattern_multi_trait_marks, specifies the kernel to be used to
-#' calculate the energy, possible kernels can be: Gaussian, Epanechnikov,
-#' Rectangular, Cumulative.
-#' @param bw Bandwidth with which the kernels are scaled, so that this is the
-#' standard deviation of the smoothing kernel.
-#' @param rmax Maximum distance at which the summary statistics are evaluated.
-#' @param divisor Divisor in the smoothing kernel, d or r.
+#' @param kernel_arg A string specifying the kernel type to be used for energy calculations. Possible values are:
+#' - `"epanechnikov"`: Epanechnikov kernel.
+#' - `"rectangular"` or `"box"`: Rectangular (Box) kernel.
+#' - `"gaussian"`: Gaussian kernel.
+#' - `"cumulative"`: Cumulative kernel.
 #'
-#' @details
-#' Returns the function of the selected kernel, which is then used to
-#' calculate the kernel.
+#' @param bw A numeric value representing the bandwidth used to scale the kernel. This typically corresponds to the standard deviation in smoothing kernels like Gaussian.
 #'
-#' @return list
+#' @param rmax A numeric value specifying the maximum distance at which the summary statistics are evaluated. This value affects the range of influence for the kernel function.
+#'
+#' @param divisor A string specifying the divisor in the kernel function. Possible values are:
+#' - `"none"`: No division is applied.
+#' - `"r"`: Divisor applied with respect to the distance `r`.
+#' - `"d"`: Divisor applied with respect to the distance `d`.
+#'
+#' @details 
+#' The `select_kernel` function allows you to choose from four types of kernel functions: Epanechnikov, Rectangular (Box), Gaussian, and Cumulative. These kernels are used in energy calculations during point pattern reconstruction, where the kernel defines how distances between points are weighted in the reconstruction process.
+#' 
+#' The function returns a list containing the selected kernel function and the adjusted `rmax` distance, which is used in further calculations for energy minimization during the point pattern reconstruction.
+#'
+#' The kernel functions are chosen based on the `kernel_arg` input and can be adjusted with the `bw` (bandwidth), `rmax` (maximum distance), and `divisor` (scaling factor) parameters.
+#'
+#' @return 
+#' A list containing:
+#' - `kernel`: The selected kernel function to be used for energy calculations.
+#' - `rmax_bw`: The adjusted maximum distance for the kernel function.
 #'
 #' @aliases select_kernel
 #' @rdname select_kernel
 #'
 #' @keywords internal
 #'
+#' @examples
+#' \dontrun{
+#' # Example of using the select_kernel function
+#' kernel_info <- select_kernel(kernel_arg = "gaussian", bw = 0.5, rmax = 100, divisor = "r")
+#' }
+#' 
 select_kernel <- function(kernel_arg, bw, rmax, divisor) {
   kernel <- switch(kernel_arg,
     epanechnikov = {

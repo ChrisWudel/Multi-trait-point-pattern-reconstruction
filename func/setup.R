@@ -1,3 +1,32 @@
+#' setup
+#'
+#' @description 
+#' This function installs and loads the required R packages and additional functions for the Multi-Trait Point Pattern Reconstruction (MTPPR) workflow. 
+#' It downloads the necessary R script files from GitHub, sources them into the current R session, and ensures that the specified packages and functions are available for use.
+#'
+#' @param packages A character vector of package names to be installed and loaded into the current R session.
+#' @param func_names A character vector of function names to be loaded from predefined script files hosted on GitHub.
+#'
+#' @details
+#' The function ensures that all the required packages and functions are installed and loaded into the R session. 
+#' It first checks for the availability of the `load_pkg` and `load_func` functions by downloading the associated R scripts from GitHub.
+#' After the scripts are sourced, the function uses `load_pkg` to install and load the required R packages and `load_func` to load any additional user-defined functions specified in the `func_names` parameter.
+#'
+#' @return NULL
+#'
+#' @aliases setup
+#' @rdname setup
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Example usage of the setup function
+#' packages <- c("ggplot2", "dplyr")
+#' func_names <- c("reconstruct_pattern_multi", "plot.rd_multi")
+#' setup(packages, func_names)
+#' }
+#' 
 setup <- function(packages, func_names) {
   # Define URLs for the R scripts
   urls <- list(

@@ -1,20 +1,40 @@
 #' data_import
 #'
-#' @description Imports various datasets.
+#' @description Imports various datasets based on the input parameter and processes them.
 #' 
-#' @param x Input value that determines which dataset should be loaded and processed.
+#' @param x A string value specifying which dataset to load and process. Possible values include:
+#' - `"VERMOS_project"`: Dataset from the VERMOS project.
+#' - `"Northwest_German_Forest_Research_Institute"`: Dataset from the Northwest German Forest Research Institute.
+#' - `"Marteloscope_data_from_the_by_the_Chair_of_Forest_Growth_and_Woody_Biomass_Production"`: Marteloscope dataset.
+#' - `"random"`: Simulated random point pattern dataset.
+#' - `"regular"`: Simulated regular point pattern dataset.
+#' - `"cluster_size5"`: Simulated clustered point pattern dataset with cluster size 5.
+#' - `"cluster_size5_and_random"`: Simulated clustered point pattern dataset with cluster size 5 and random points.
 #' 
 #' @details
-#' This function is used to import various datasets based on an input
-#' value, process them, and return them as a list containing the data and a spatial
-#' window object (W).
+#' This function loads different datasets based on the value of the `x` parameter, processes the dataset, 
+#' and returns a list containing the dataset and its corresponding spatial window (`W`).
+#' The datasets include both real-world and simulated point patterns, with attributes such as position (`x`, `y`), 
+#' diameter at breast height (`dbh [mm]`), and tree species.
+#' The spatial window object (`W`) defines the spatial extent of the data for further analysis.
 #'
-#' @return void
+#' @return A list containing:
+#' - `data`: A data frame with the columns `x`, `y`, `dbh [mm]`, and `Tree species`.
+#' - `W`: A spatial window object representing the spatial extent of the dataset.
 #'
 #' @aliases data_import
 #' @rdname data_import
 #'
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Example of importing the VERMOS project dataset
+#' data_info <- data_import("VERMOS_project")
+#' data <- data_info[[1]]
+#' spatial_window <- data_info[[2]]
+#' }
+#' 
 data_import <- function(x) {
   
 switch(x,

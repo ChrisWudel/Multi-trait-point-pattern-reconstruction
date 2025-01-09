@@ -1,23 +1,32 @@
 #' load_func
 #'
-#' @description Loads the desired predefined functions for MTPPR (Multi-Trait Point Pattern Reconstruction).
+#' @description Loads predefined functions for Multi-Trait Point Pattern Reconstruction (MTPPR) from external R scripts.
 #'
-#' @param function_names A vector of character strings. Each string is the name of a 
-#' function you want to load and use. These function names should match those 
-#' defined in the R script files specified by the URLs.
+#' @param func_names A character vector of function names to load. Each element should be a string corresponding 
+#' to the name of a function defined in the predefined R script files. These names must match the ones 
+#' specified in the predefined URLs for R scripts.
 #'
 #' @details
-#' The function loads R functions from R script files hosted on GitHub or other web sources. 
-#' The URLs of these R script files are predefined within the function. The function retrieves 
-#' and evaluates the code from these scripts to make the functions available in the R environment. 
-#' Once the code is executed, you can access and use the functions specified by their names.
+#' This function loads R functions from external script files, which are hosted on platforms like GitHub. 
+#' The URLs of these R script files are predefined within the function. The function fetches the R script 
+#' from the given URLs and evaluates the code, making the functions available in the current R environment.
+#' After execution, the requested functions can be accessed and used by their names, provided they are 
+#' successfully loaded.
 #'
-#' @return A vector of character strings containing the names of the successfully loaded functions.
+#' @return A vector of character strings containing the names of the functions that were successfully 
+#' loaded into the environment.
 #'
 #' @aliases load_func
 #' @rdname load_func
 #'
 #' @keywords internal
+#'
+#' @examples
+#' \dontrun{
+#' # Example usage of load_func function
+#' # Load the 'reconstruct_pattern_multi' and 'compute_statistics' functions
+#' load_func(c("reconstruct_pattern_multi", "compute_statistics"))
+#' }
 #'
 load_func <- function(func_names) {
   # Ensure that 'func_names' is a character vector

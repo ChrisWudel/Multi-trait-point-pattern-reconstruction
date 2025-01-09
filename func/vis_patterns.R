@@ -1,20 +1,32 @@
-#' vis_pp
+#' vis_patterns
 #'
-#' @description Function to visualize and compare point patterns.
+#' @description 
+#' Visualizes and compares the reference and reconstructed point patterns from a point pattern reconstruction process. 
+#' The function generates side-by-side scatter plots to visually compare the two patterns, including attributes such as tree species, diameter at breast height (dbh), and stock layer (rejuvenation or upper stand).
+#'
+#' @param reconstruction A reconstructed point pattern object. This object contains both the reference and reconstructed point patterns, typically produced by a pattern reconstruction process.
 #' 
-#' @param reconstruction This represents the reconstructed point pattern.
+#' @details 
+#' This function provides a comparison of the reference and reconstructed point patterns using scatter plots. The points are displayed with different shapes, colors, and sizes representing the tree species, dbh (diameter at breast height), and stock layer (rejuvenation or upper stand). The reference and reconstructed patterns are shown in separate plots, and the function uses the `ggplot2` and `patchwork` libraries for visualization.
 #' 
-#' @details
-#' Function is designed to visualize and compare point patterns from a reconstruction 
-#' process. It generates plots for both the reference point pattern and the reconstructed 
-#' point pattern, allowing for a visual comparison of the two.
+#' If multiple reconstructions are available, the function will show the pattern from the first reconstruction as the reconstructed point pattern. It provides a clear comparison for users to assess the reconstruction's quality.
 #'
-#' @return void
+#' @return 
+#' A `patchwork` object containing the side-by-side comparison of the reference and reconstructed point patterns.
 #'
-#' @aliases vis_pp
-#' @rdname vis_pp
+#' @aliases vis_patterns
+#' @rdname vis_patterns
+#'
+#' @import ggplot2 patchwork
 #'
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Example usage of the vis_patterns function
+#' vis_patterns(reconstruction)
+#' }
+#' 
 vis_pp <- function(reconstruction) {
   # Install required packages if not already installed
   if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")

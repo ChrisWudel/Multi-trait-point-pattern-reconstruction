@@ -1,72 +1,49 @@
 #' reconstruct_pattern_multi
 #'
-#' @description Pattern reconstruction of a pattern marked by multiple traits.
+#' @description Pattern reconstruction of a point pattern marked by multiple traits.
 #'
-#' @param marked_pattern ppp  object with marked pattern. See Details section
-#' for more information.
-#' @param xr,yr Maximum extent in x and y direction of observation window.
-#' @param n_repetitions Integer representing the number of simulations to be
-#' performed.
-#' @param max_steps Maximum number simulation steps.
-#' @param no_change Integer representing the number of iterations
-#' (per 1000 simulation steps) after which the reconstruction is terminated if the
-#' energy does not decrease.
-#' @param rcount Integer representing the number of intervals for which the
-#' summary statistics are evaluated.
-#' @param rmax Maximum distance [m] up to which the summary statistics are
-#' evaluated.
-#' @param issue Integer that determines after how many simulations steps an
-#' output occurs.
+#' @param marked_pattern A ppp object representing the marked pattern. See the Details section for more information.
+#' @param xr, yr Maximum extent in the x and y directions of the observation window.
+#' @param n_repetitions Integer representing the number of simulations to be performed.
+#' @param max_steps Maximum number of simulation steps.
+#' @param no_change Integer representing the number of iterations (per 1000 simulation steps) after which the reconstruction is terminated if the energy does not decrease.
+#' @param rcount Integer representing the number of intervals for which the summary statistics are evaluated.
+#' @param rmax Maximum distance [m] up to which the summary statistics are evaluated.
+#' @param issue Integer that determines after how many simulation steps an output occurs.
 #' @param divisor Choice of divisor in the estimation formula: either "r" or "d".
-#' @param kernel_arg The kernel used to calculate the energy, possible kernels
-#' can be: Gaussian, Epanechnikov, Rectangular, Cumulative.
-#' @param timing Logical value: The computation time is measured if this is TRUE.
-#' @param energy_evaluation Logical value: If this is TRUE, the procedure stores
-#'  the energy shares of the total energy per simulation step.
-#' @param show_graphic Logical value: If this is TRUE, the procedure records the
-#'  point pattern during optimization and updated.
-#' @param Lp Distance measure for the calculation of the energy function
-#' (Lp distance, 1 <= p < Inf).
-#' @param bw Bandwidth [m] with which the kernels are scaled, so that this is
-#' the standard deviation of the smoothing kernel.
-#' @param sd This is the standard deviation [m] used in the move_coordinate action.
-#' @param steps_tol After the value steps_tol it is checked whether the energy
-#' change is smaller than tol.
-#' @param tol Stops the procedure of energy if more than 1 - tol times no changes.
+#' @param kernel_arg The kernel used to calculate the energy. Possible kernels can be: Gaussian, Epanechnikov, Rectangular, Cumulative.
+#' @param timing Logical value: If TRUE, computation time is measured.
+#' @param energy_evaluation Logical value: If TRUE, the procedure stores the energy shares of the total energy per simulation step.
+#' @param show_graphic Logical value: If TRUE, the procedure records the point pattern during optimization and updates it.
+#' @param Lp Distance measure for the calculation of the energy function (Lp distance, 1 <= p < Inf).
+#' @param bw Bandwidth [m] with which the kernels are scaled, so that it is the standard deviation of the smoothing kernel.
+#' @param sd The standard deviation [m] used in the move_coordinate action.
+#' @param steps_tol After the value of steps_tol, it is checked whether the energy change is smaller than tol.
+#' @param tol Stops the procedure if more than 1 - tol times no changes occur.
 #' @param w_markcorr Vector of possible weightings of individual mcf's. (Default: all equal).
-#' @param prob_of_actions Vector of probabilities for the actions performed.
+#' @param prob_of_actions Vector of probabilities for the actions performed:
 #' \code{c(move_coordinate = 0.4, switch_coords = 0.1, exchange_mark_one = 0.1,
 #' exchange_mark_two = 0.1, pick_mark_one = 0.2, pick_mark_two = 0.1)}.
 #' @param k Vector of values k; used only if Dk is included in w_statistics.
-#' @param w_statistics  vector of named weights for optional spatial statistics
+#' @param w_statistics Vector of named weights for optional spatial statistics
 #' from the \code{spatstat} package to be included in the energy calculation. This may
 #' include Dk, K, Hs, pcf.
-#' @param verbose Logical if progress report is printed.
-#' @param fixed_points A variable that stores fixed points, with no fixed points by null.
-#' @param obs_window This defines the observation window for your spatial analysis.
-#' @param core_window Defines the core window for your analysis, by default set to the same coordinates as obs_window
-#' @param edge_correction calculate edge correction for spatial point pattern analysis.
-#' @param is.fixed This defines a function to determine if points are considered fixed.
+#' @param verbose Logical value indicating whether a progress report should be printed.
+#' @param fixed_points A variable that stores fixed points, with no fixed points by default (null).
+#' @param obs_window Defines the observation window for your spatial analysis.
+#' @param core_window Defines the core window for your analysis, by default set to the same coordinates as obs_window.
+#' @param edge_correction Logical value: If TRUE, calculates edge correction for spatial point pattern analysis.
+#' @param is.fixed A function that determines if points are considered fixed.
 #'
 #' @details
-#' A novel approach carries out a pattern reconstruction of marked dot patterns
-#' as described by Tscheschel and Stoyan (2006) and Wiegand and Moloney (2014).
+#' This method performs a pattern reconstruction of marked point patterns as described by Tscheschel and Stoyan (2006) and Wiegand and Moloney (2014). One particular feature is the simultaneous consideration of both marks, accounting for their correlation during reconstruction.
 #'
-#' One particular feature is the simultaneous consideration of both marks,
-#' accounting for their correlation during reconstruction.
+#' The marked point pattern (PPP object) must be structured as follows:
+#' - X-coordinate, Y-coordinate, a metric mark (e.g. diameter at breast height), and a nominal mark (e.g. tree species). The unit of measurement is in meters [m].
 #'
-#' The marked point pattern (PPP object) must is currently structured as follows:
-#' X-coordinate, Y-coordinate, metric mark (e.g. diameter at breast height),
-#' and nominal mark (e.g. tree species).It is calculated in the unit metre [m].
+#' The method uses a combination of the mark correlation function and pair correlation function to describe the pattern. Additional summary statistics may be considered. Two randomly selected marks are chosen in each iteration, and one of various actions is performed. Changes are only retained if the difference between the observed and reconstructed pattern decreases, minimizing the energy.
 #'
-#' A combination of the mark correlation function and pair correlation function
-#' is used for pattern description. Additional summary statistics may be
-#' considered.Two randomly selected marks are chosen in each iteration, and one
-#' of various actions is performed. Changes will only be retained if the
-#' difference between the observed and reconstructed pattern decreases
-#' (minimizing energy).
-#'
-#' This method is currently only suitable for homogeneous point patterns.
+#' This method is currently suitable only for homogeneous point patterns.
 #'
 #' A comprehensive description of the method can be found in Wudel et al. (2023).
 #'
@@ -75,7 +52,7 @@
 #' \code{\link{reconstruct_pattern}} \cr
 #' \code{\link{reconstruct_pattern_marks}}
 #'
-#' @return rd_multi
+#' @return rd_multi object
 #'
 #' @examples
 #' \dontrun{
@@ -118,6 +95,7 @@
 #' https://doi.org/10.1111/2041-210X.14206
 #'
 #' @export
+#' 
 reconstruct_pattern_multi <- function(marked_pattern,
                                       fixed_points = NULL,
                                       xr = marked_pattern$window$xrange,

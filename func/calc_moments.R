@@ -1,28 +1,42 @@
 #' calc_moments
 #'
-#' @description Calculate moments
+#' @description This function calculates the product-moment function for a given point pattern, 
+#' based on specified parameters. It computes the weighted correlation of marks between points 
+#' in the point pattern using a smoothing kernel.
 #'
-#' @param fn Determination of the weightings of the mark correlation functions.
-#' @param p Defines the initial state of the new ponit pattern.
-#' @param x,y x and y coordinates of the points from the reference point pattern.
-#' @param mark Marks the currently viewed point pattern.
-#' @param kernel Result of the kernel calculation, calculated with the calc_kernels function.
-#' @param rmax_bw Maximum distance at which the summary statistics are
-#' evaluated + Bandwidth with which the kernels are scaled, so that this is the
-#' standard deviation of the smoothing kernel.
-#' @param r Sequence from rmin to rmax in rcount steps.
-#' @param exclude Vector indicating which values not to use.
+#' @param fn A function that defines the weightings of the mark correlation functions. 
+#' It should specify the indices of points (i, j) for the moment calculation.
+#' @param p A point pattern object that contains the coordinates and marks (attributes) of the points.
+#' @param x A numeric vector containing the x-coordinates of the points from the reference point pattern.
+#' @param y A numeric vector containing the y-coordinates of the points from the reference point pattern.
+#' @param mark A vector of marks (attributes) for the points in the point pattern.
+#' @param kernel The kernel function resulting from the kernel calculation (typically from `calc_kernels`).
+#' @param rmax_bw The maximum distance at which summary statistics are evaluated, which also defines the bandwidth 
+#' for kernel scaling. This parameter determines the standard deviation of the smoothing kernel.
+#' @param r A numeric vector representing a sequence of radii used in the kernel estimation, ranging from `rmin` to `rmax`.
+#' @param exclude A vector of indices that specifies which points should be excluded from the calculation.
 #'
 #' @details
-#' Definition of the product-moment function for calculating the contribution
-#' of a point at the coordinates x, y with marking.
+#' This function calculates the product-moment function for each point in the point pattern. The product-moment 
+#' function assesses the contribution of a point at coordinates \( x \), \( y \), with a corresponding mark, using kernel 
+#' smoothing to evaluate the distance-based correlation of the marks. The distance between points is evaluated and the 
+#' kernel function is applied for smoothing.
 #'
-#' @return matrix
+#' @return A numeric matrix where each element corresponds to a calculated moment based on the mark correlation 
+#' for the selected points.
 #'
 #' @aliases calc_moments
 #' @rdname calc_moments
 #'
 #' @keywords internal
+#' 
+#' @examples
+#' \dontrun{
+#' # Example usage of calc_moments
+#' moments <- calc_moments(fn = some_function, p = some_point_pattern, x = x_coords, y = y_coords, 
+#'                         mark = marks, kernel = some_kernel, rmax_bw = 50, r = seq(0, 100, 10))
+#' }
+#' 
 calc_moments <- function(fn,
                          p,
                          exclude = NULL,
@@ -41,6 +55,39 @@ calc_moments <- function(fn,
   z[fn$i, , drop = FALSE] * mark[fn$j] + z[fn$j, , drop = FALSE] * mark[fn$i]
 }
 
+#' calc_moments_full
+#'
+#' @description This function computes the full matrix of moments for a point pattern, 
+#' summing the product-moment contributions for all pairs of points.
+#'
+#' @param fn A function that defines the weightings of the mark correlation functions, 
+#' specifying indices of points (i, j) for moment calculation.
+#' @param p A point pattern object containing the coordinates and marks (attributes) of the points.
+#' @param kernel The kernel function resulting from the kernel calculation (typically from `calc_kernels`).
+#' @param rmax_bw The maximum distance at which summary statistics are evaluated, 
+#' also defining the bandwidth for kernel scaling (standard deviation of the smoothing kernel).
+#' @param r A numeric vector representing a sequence of radii for kernel estimation, ranging from `rmin` to `rmax`.
+#'
+#' @details
+#' This function calculates the full matrix of moments for the entire point pattern by iterating through all pairs of points 
+#' and summing their individual product-moment contributions. The result is a matrix that reflects the weighted correlation 
+#' of marks for all point pairs based on their spatial proximity and the kernel function.
+#'
+#' @return A matrix containing the calculated moments for each pair of points in the pattern, 
+#' with row names representing the pairs of point indices (i, j).
+#'
+#' @aliases calc_moments_full
+#' @rdname calc_moments_full
+#'
+#' @keywords internal
+#'
+#' @examples
+#' \dontrun{
+#' # Example usage of calc_moments_full
+#' full_moments <- calc_moments_full(fn = some_function, p = some_point_pattern, 
+#'                                    kernel = some_kernel, rmax_bw = 50, r = seq(0, 100, 10))
+#' }
+#' 
 calc_moments_full <- function(fn,
                               p,
                               kernel,

@@ -168,7 +168,7 @@ species_markcorr_func_recon<-as.data.frame(species_markcorr_func_recon)
 name <- c(sprintf("species_markcorr_func_recon%03d", seq_len(n_repetitions)))
 colnames(species_markcorr_func_recon) <- name
 
-markcorr_func               <- markcorr(ppp_reconstructed, correction = "none", r = r, bw = bw, kernel = kernel_arg ,devisor = divisor)
+markcorr_func               <- markcorr(ppp_reference, correction = "none", r = r, bw = bw, kernel = kernel_arg ,devisor = divisor)
 dbh_markcorr_func           <- markcorr_func[[1]]$un
 species_markcorr_func       <- markcorr_func[[2]]$un
 

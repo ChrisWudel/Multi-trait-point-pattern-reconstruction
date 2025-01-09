@@ -11,7 +11,7 @@
 #' `f` and `f0` during the energy calculation.
 #' @param statistics A list of numeric vectors or matrices containing the results from the 
 #' `compute_statistics` function for the new point pattern. This includes optional spatial 
-#' statistics like `Dk`, `K`, `Hs`, or `pcf`.
+#' statistics like Dk, K, Hs, or pcf.
 #' @param f_, f0_, n_, statistics_ Same as `f`, `f0`, `n`, and `statistics`, but for the reference 
 #' point pattern (used to compare against the new point pattern).
 #' @param fn A list representing the determination of the weightings of the mark correlation 
@@ -20,9 +20,9 @@
 #' significance of different values during the energy calculation. Larger values increase the 
 #' contribution of corresponding data points.
 #' @param Lp A numeric value representing the distance measure used in the energy function 
-#' calculation (Lp distance, where \(1 \leq p < \infty\)).
-#' @param w_statistics A named vector of weights for optional spatial statistics (e.g., `Dk`, 
-#' `K`, `Hs`, or `pcf`) from the `spatstat` package. These statistics are used in the energy calculation.
+#' calculation (Lp distance, where 1 <= p < Inf).
+#' @param w_statistics A named vector of weights for optional spatial statistics (e.g., Dk, 
+#' K, Hs, or pcf) from the `spatstat` package. These statistics are used in the energy calculation.
 #'
 #' @details
 #' The energy function quantifies the "energy" of a spatial point pattern, which is a measure of 
@@ -35,7 +35,7 @@
 #' The function computes the energy by considering:
 #' - The difference in the weighted product-moments between the new and reference patterns.
 #' - The difference in the mark correlation functions (`f0`).
-#' - The difference in spatial statistics (such as `Dk`, `K`, `Hs`, or `pcf`).
+#' - The difference in spatial statistics (such as Dk, K, Hs, or pcf).
 #' A lower energy value indicates a better match between the new point pattern and the reference pattern.
 #'
 #' @return A numeric vector representing the total energy value of the point pattern, 
@@ -51,7 +51,7 @@
 #' # Example usage of energy_fun function
 #' energy_values <- energy_fun(f, f0, n, statistics, f_, f0_, n_, statistics_, fn, wedge, wedge_, Lp, w_statistics)
 #' }
-#'
+#' 
 Energy_fun <- function(f, f0, n, statistics, f_, f0_, n_, statistics_, fn, wedge, wedge_, Lp, w_statistics) {
      result <- c(
       f = sum(fn$w * rowMeans(abs(

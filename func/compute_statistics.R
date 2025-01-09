@@ -1,35 +1,35 @@
 #' compute_statistics
 #'
 #' @description Computes various summary statistics for a given point pattern. 
-#' This includes common spatial statistics such as \( D_k \), \( K \), \( H_s \), and \( pcf \) based on user input.
+#' This includes common spatial statistics such as D_k, K, H_s, and pcf based on user input.
 #' The function utilizes the `spatstat` package to compute these statistics and returns them in a list.
 #'
 #' @param x A numeric vector containing the x-coordinates of the points from the reference point pattern.
 #' @param y A numeric vector containing the y-coordinates of the points from the reference point pattern.
-#' @param k A numeric vector of values \( k \), used only if the \( D_k \)-function is included in the spatial statistics to be computed (see `w_statistics`).
+#' @param k A numeric vector of values k, used only if the D_k-function is included in the spatial statistics to be computed (see `w_statistics`).
 #' @param xr A numeric vector of length 2 defining the x-extension of the observation window (start and end).
 #' @param yr A numeric vector of length 2 defining the y-extension of the observation window (start and end).
 #' @param w_statistics A named vector of spatial statistics to include in the energy calculation. 
-#' This may include any of the following statistics: \( D_k \), \( K \), \( H_s \), or \( pcf \). The function computes each statistic 
+#' This may include any of the following statistics: D_k, K, H_s, or pcf. The function computes each statistic 
 #' that is specified in this vector using corresponding methods from the `spatstat` package.
 #' @param bw A bandwidth parameter used for kernel density estimation or spatial smoothing, affecting some statistics (e.g., pcf).
 #' @param divisor A divisor for normalization or other scaling purposes within the summary statistics calculation. This parameter is 
 #' relevant for some statistics (e.g., pcf).
-#' @param kernel_arg The kernel function or arguments used in kernel density estimation, relevant for functions like \( pcf \).
-#' @param r A numeric vector of radii values defining the range for which the statistics are computed, typically from \( r_{\text{min}} \) to \( r_{\text{max}} \).
+#' @param kernel_arg The kernel function or arguments used in kernel density estimation, relevant for functions like pcf.
+#' @param r A numeric vector of radii values defining the range for which the statistics are computed, typically from r_min to r_max.
 #'
 #' @details
 #' This function computes various spatial statistics using the `spatstat` package. The available statistics include:
-#' - \( D_k \): The \( k \)-nearest neighbor distance function.
-#' - \( K \): The pair correlation function, \( K(r) \).
-#' - \( pcf \): The pair correlation function (spherical contact distribution) using kernel smoothing.
-#' - \( H_s \): The pair correlation function using a specific estimation method from `spatstat`.
+#' - D_k: The k-nearest neighbor distance function.
+#' - K: The pair correlation function, K(r).
+#' - pcf: The pair correlation function (spherical contact distribution) using kernel smoothing.
+#' - H_s: The pair correlation function using a specific estimation method from `spatstat`.
 #' 
-#' The statistics are computed for each of the specified values in the `w_statistics` vector, and the results are returned 
+#' The statistics are computed for each of the specified values in the w_statistics vector, and the results are returned 
 #' as a list.
 #'
 #' @return A list containing the computed spatial statistics. Each element in the list corresponds to one of the statistics
-#' specified in the `w_statistics` parameter, with the respective function result.
+#' specified in the w_statistics parameter, with the respective function result.
 #'
 #' @aliases compute_statistics
 #' @rdname compute_statistics
